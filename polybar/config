@@ -1,81 +1,124 @@
-[bar/i3wm]
-width = 100%
-height =24 
-radius = 0
-fixed-center = false
-
+### Include colors config file ###
+[colors]
 background = #2f2f38
-foreground = #b0c4bb
-
-line-size = 3
-line-color =
-
-border-size = 0
-border-color =
-
-padding-left = 0
-padding-right = 2
-
-module-margin-left = 1
-module-margin-right = 2
-
-font-0 = "Source Code Pro Semibold:pixelsize=10;1"
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
-font-2 = "Font Awesome 5 Brands:pixelsize=10;1"
-
-#modules-left = wlan eth
-modules-left = eth
-modules-center = i3
-modules-right = date powermenu
-
-tray-position = right
-;tray-padding =
-
-cursor-click = pointer
-cursor-scroll = ns-resize
-
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+## End of Colors ##
+#
 [module/i3]
 type = internal/i3
-format = <label-state> <label-mode>
-index-sort = true
+pin-workspaces = false
+strip-wsnumbers = false
+enable-click = false
+enable-scroll = false
 wrapping-scroll = false
+reverse-scroll = false
+index-sort = true
+fuzzy-match = true
 
+ws-icon-1 = "1;"
+ws-icon-2 = "2";
+ws-icon-3 = "3";
+ws-icon-4 = "4";
+ws-icon-5 = "5";
+ws-icon-6 = "6";
+ws-icon-7 = "7";
+ws-icon-8 = "8";
+ws-icon-9 = "9";
+
+
+#ws-icon-default = 
+
+format = <label-state> <label-mode>
+
+label-mode = %mode%
 label-mode-padding = 2
 label-mode-foreground = #34343e
 label-mode-background = #2f2f38
 
-label-focused = %index%
-label-focused-background = #688486
-label-focused-foreground = #2f2f38
+label-focused = %icon% %name%
+#label-focused-background = #688486
+#label-focused-foreground = #2f2f38
 label-focused-padding = 2
-
-label-unfocused = %index%
-label-unfocused-background = #81a2be
-label-unfocused-foreground = #2f2f38
+label-unfocused = %icon% %name%
+#label-unfocused-background = #81a2be
+#label-unfocused-foreground = #2f2f38
 label-unfocused-padding = 2
-
-label-visible = %index%
-label-visible-background = #81a2be
-label-visible-foreground = #2f2f38
+label-visible = %icon% %name%
+#label-visible-background = #81a2be
+#label-visible-foreground = #2f2f38
 label-visible-padding = 2
-
-label-urgent = %index%
-label-urgent-background = #BA2922
+label-urgent = %icon% %name%
+#label-urgent-background = #BA2922
 label-urgent-padding = 2
 
+############### MODULE: CPU #################
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = 
+#format-prefix-foreground = #f1f113
+#format-underline = #f90000
+label = %percentage%%
+############### MODULE: RAM #################
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = 
+#format-prefix-foreground = ${colors.foreground-alt}
+#format-underline = #4bffdc
+label = %percentage_used%%
+############## VOLUME Module ################
+[module/volume]
+type = internal/alsa
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL
+label-volume-foreground = ${root.foreground}
+
+format-muted-prefix = " "
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = sound muted
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+#### END OF Volume ###########################
 [module/wlan]
 type = internal/network
-interface = net1
+interface = wlo1
 interval = 3.0
-
 format-connected = <ramp-signal> <label-connected>
 format-connected-foreground = #2f2f38
 format-connected-background = #81a2be
 format-connected-padding = 2
-label-connected = %essid%
-
-format-disconnected =
-
+format-disconnected = <label-disconnected>
+#
+format-packetloss = <animation-packetloss> <label-connected>
+#
+label-connected = %essid% %downspeed:9%
+label-connected-foreground = #eefafafa
+label-disconnected = not connected
+label-disconnected-foreground = #66ffffff
+#
 ramp-signal-0 = 
 ramp-signal-1 = 
 ramp-signal-2 = 
@@ -86,41 +129,39 @@ ramp-signal-foreground = #2f2f38
 [module/eth]
 type = internal/network
 interface = enp0s25
-interval = 3.0
+interval = 5.0
 
 format-connected-padding = 2
-format-connected-foreground = #2f2f38
-format-connected-background = #81a2be
-format-connected-prefix = " "
-format-connected-prefix-foreground = #2f2f38
+#format-connected-foreground = #2f2f38
+#format-connected-background = #81a2be
+format-connected-prefix = 
+#format-connected-prefix-foreground = #2f2f38
 label-connected = %local_ip%
 
 format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 15
 
-date =
-date-alt = " %Y-%m-%d"
+date = "%Y-%m-%d"
+date-alt =
 
-time = %H:%M
-time-alt = %H:%M:%S
+time = "%H:%M"
+time-alt = "%H:%M:%S"
 
-format-prefix = 
-format-foreground = #2f2f38
-format-background = #81a2be
-format-padding = 2
+format-prefix = " " 
+#format-foreground = #2f2f38
+#format-background = #81a2be
+format-padding = 0
 
 label = %date% %time%
-
+label-separator = |
+##### POWERMENU Mofule ###########
 [module/powermenu]
 type = custom/menu
-
 expand-right = true
-
 format-spacing = 1
-
 label-open = 
 label-open-foreground = #81a2be
 label-close =  cancel
@@ -143,9 +184,139 @@ menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
 
+### Module xkb ### 
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-underline = ${colors.secondary}
+
+label-layout = %layout%
+label-layout-underline = ${colors.secondary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+## END of XKB ## 
+#
+###### TEMPERATURE  ##########
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+#label-warn-foreground = ${colors.secondary}
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+#ramp-foreground = ${colors.foreground-alt}
+############ BATTERY Module ###################
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = #ffb52a
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+
+format-full-prefix = 
+#format-full-prefix-foreground = ${colors.foreground-alt}
+#format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+########### END of BATTERY ####################
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+format-prefix =  
+
+#label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted = : %percentage_used%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = #fff
+
+###########################
+#######  SETTINGS   #######
+###########################
 [settings]
 screenchange-reload = true
 
 [global/wm]
 margin-top = 0
 margin-bottom = 0
+### BAR: i3wm ###
+[bar/i3wm]
+monitor = eDP1
+width = 100%
+height =  32
+radius = 0
+fixed-center = true
+
+background = ${colors.background}
+#background = #b2000000
+foreground = ${colors.foreground}
+
+line-size = 0
+line-color = 
+
+border-size = 0
+border-color = 
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
+font-1 = "Font Awesome 5 Brands Regular:style=Regular:pixelsize=10;1"
+font-2 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid,Book"
+font-3 = "SourceCodePro+Powerline+Awesome Regular:style=Regular:pixelsize=10;1"
+font-4 = "Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular:pixelsize=10;1"
+font-5 = "Droid Sans Mono Awesome:style=Regular:pixelsize=10;1"
+font-6 = "Font Awesome 5 Free:style=Solid:pixelsize=10;3"
+font-7 = "Inconsolata Awesome:style=Mediumpixelsize=10;2"
+font-8 = "Font Awesome 5 Brands:style=Regular:pixelsize=10;1"
+
+modules-left = i3 
+modules-center = cpu memory filesystem battery temperature 
+modules-right = volume eth wlan date xkeyboard
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+tray-position = right
+tray-padding = 1
+tray-detached = false
+tray-transparent = false
+#tray-background = #b2000000
+
+#override-redirect = false 
+#wm-restack = i3 
